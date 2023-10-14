@@ -20,6 +20,7 @@
     "ai.pathing.BirdPathNodeMakerMixin",
     "ai.pathing.ChunkCacheMixin",
     "ai.pathing.LandPathNodeMakerMixin",
+    "ai.pathing.MixinBlock",
     "ai.poi.PointOfInterestSetMixin",
     "ai.poi.PointOfInterestStorageMixin",
     "ai.poi.PointOfInterestTypesMixin",

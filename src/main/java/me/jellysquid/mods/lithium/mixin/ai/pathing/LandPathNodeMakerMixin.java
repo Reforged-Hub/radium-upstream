@@ -1,5 +1,6 @@
 package me.jellysquid.mods.lithium.mixin.ai.pathing;
 
+import me.jellysquid.mods.lithium.api.pathing.BlockPathing;
 import me.jellysquid.mods.lithium.common.ai.pathing.PathNodeCache;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.ai.pathing.LandPathNodeMaker;
@@ -37,7 +38,21 @@ public abstract class LandPathNodeMakerMixin {
             cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD
     )
     private static void getLithiumCachedCommonNodeType(BlockView world, BlockPos pos, CallbackInfoReturnable<PathNodeType> cir, BlockState blockState) {
-        PathNodeType type = PathNodeCache.getPathNodeType(blockState);
+        PathNodeType type;
+        if (((BlockPathing) blockState.getBlock()).needsDynamicNodeTypeCheck()) {
+            type = blockState.getBlockPathType(world, pos, null);
+
+            if (type == null) {
+                type = PathNodeCache.getPathNodeType(blockState);
+            }
+        } else {
+            type = PathNodeCache.getPathNodeType(blockState);
+
+            if (type != PathNodeType.LAVA && type != PathNodeType.DANGER_FIRE && ((BlockPathing) blockState.getBlock()).needsDynamicBurningCheck() && blockState.isBurning(world, pos)) {
+                type = PathNodeType.DANGER_FIRE;
+            }
+        }
+
         if (type != null) {
             cir.setReturnValue(type);
         }
