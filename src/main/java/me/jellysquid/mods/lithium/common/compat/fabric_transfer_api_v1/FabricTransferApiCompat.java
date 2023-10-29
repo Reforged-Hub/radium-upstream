@@ -12,7 +12,7 @@ public class FabricTransferApiCompat {
     public static final boolean FABRIC_TRANSFER_API_V_1_PRESENT;
 
     static {
-        FABRIC_TRANSFER_API_V_1_PRESENT = LoadingModList.get().getModFileById("fabric-transfer-api-v1") != null;
+        FABRIC_TRANSFER_API_V_1_PRESENT = LoadingModList.get().getModFileById("fabric_transfer_api_v1") != null;
     }
 
     public static boolean canHopperInteractWithApiInventory(HopperBlockEntity hopperBlockEntity, BlockState hopperState, boolean extracting) {
